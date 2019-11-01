@@ -7,13 +7,15 @@ import ua.nure.cs.shatalov.usermanagement.domain.User;
 
 public class HsqldbUserDaoTest extends TestCase {
 
-	HsqldbUserDao dao;
+	private HsqldbUserDao dao;
+	private ConnectionFactory connectionFactory;
 	
 	@Override
 	protected void setUp() throws Exception {
 		// TODO Auto-generated method stub
 		super.setUp();
-		dao = new HsqldbUserDao();
+		connectionFactory = new ConnectionFactoryImpl();
+		dao = new HsqldbUserDao(connectionFactory);
 	}
 
 	public void testCreate() {
