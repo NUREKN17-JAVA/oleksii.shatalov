@@ -1,5 +1,6 @@
 package ua.nure.cs.shatalov.usermanagement.domain.db;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.dbunit.DatabaseTestCase;
@@ -35,6 +36,18 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 			user = dao.create(user);
 			assertNotNull(user);
 			assertNotNull(user.getId());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	public void testFindAll() {
+		try {
+			Collection collection = dao.findAll();
+			assertNotNull("Collection is null", collection);
+			assertEquals("Collection size", 2, collection.size());
 		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
