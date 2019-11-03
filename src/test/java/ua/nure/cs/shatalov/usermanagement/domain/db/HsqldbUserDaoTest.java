@@ -2,10 +2,16 @@ package ua.nure.cs.shatalov.usermanagement.domain.db;
 
 import java.util.Date;
 
+import org.dbunit.DatabaseTestCase;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.XmlDataSet;
+
 import junit.framework.TestCase;
 import ua.nure.cs.shatalov.usermanagement.domain.User;
 
-public class HsqldbUserDaoTest extends TestCase {
+public class HsqldbUserDaoTest extends DatabaseTestCase {
 
 	private HsqldbUserDao dao;
 	private ConnectionFactory connectionFactory;
@@ -14,7 +20,7 @@ public class HsqldbUserDaoTest extends TestCase {
 	protected void setUp() throws Exception {
 		// TODO Auto-generated method stub
 		super.setUp();
-		connectionFactory = new ConnectionFactoryImpl();
+		// connectionFactory = new ConnectionFactoryImpl();
 		dao = new HsqldbUserDao(connectionFactory);
 	}
 
@@ -34,6 +40,20 @@ public class HsqldbUserDaoTest extends TestCase {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+	}
+
+	@Override
+	protected IDatabaseConnection getConnection() throws Exception {
+		// TODO Auto-generated method stub
+		connectionFactory = new ConnectionFactoryImpl();
+		return new DatabaseConnection(connectionFactory.createConnection());
+	}
+
+	@Override
+	protected IDataSet getDataSet() throws Exception {
+		// TODO Auto-generated method stub
+		IDataSet dataSet = new XmlDataSet(getClass().getClassLoader().getResourceAsStream("usersDataSet.xml"));
+		return dataSet;
 	}
 
 }
