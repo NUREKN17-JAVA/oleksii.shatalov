@@ -18,10 +18,20 @@ public class HsqldbUserDao implements UserDao {
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
 	private ConnectionFactory connectionFactory;
 	
-	public HsqldbUserDao(ConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
+	public HsqldbUserDao() {
 	}
 	
+	
+	public ConnectionFactory getConnectionFactory() {
+		return connectionFactory;
+	}
+
+
+	public void setConnectionFactory(ConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
+	}
+
+
 	@Override
 	public User create(User user) throws DatabaseException {
 		// TODO Auto-generated method stub
