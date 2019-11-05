@@ -1,5 +1,8 @@
 package ua.nure.cs.shatalov.usermanagement.domain.db;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 
@@ -85,6 +88,12 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNotNull(updatedUser);
         assertEquals(testUser.getFirstName(), updatedUser.getFirstName());
         assertEquals(testUser.getLastName(), updatedUser.getLastName());
+    }
+	
+	public void testDelete() throws DatabaseException {
+        User testUser = createUserWithID(ID);
+        dao.delete(testUser);
+        assertNull(dao.find(ID));
     }
 
 	@Override

@@ -14,6 +14,7 @@ import ua.nure.cs.shatalov.usermanagement.domain.User;
 
 class HsqldbUserDao implements UserDao {
 
+	private static final String DELETE_QUERY = "DELETE FROM USERS WHERE id = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT id, firstname, lastname, dateofbirth FROM users";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
 	private static final String FIND_QUERY = "SELECT * FROM users WHERE id = ?";
@@ -96,7 +97,23 @@ class HsqldbUserDao implements UserDao {
 	@Override
 	public void delete(User user) throws DatabaseException {
 		// TODO Auto-generated method stub
+		try {
+            Connection connection = connectionFactory.createConnection();
 
+            PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+            statement.setLong(1, user.getId());
+
+            int removedRows = statement.executeUpdate();
+
+            if (removedRows != 1) {
+                throw new DatabaseException("Number of removed rows: " + removedRows);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
 	}
 
 	@Override
