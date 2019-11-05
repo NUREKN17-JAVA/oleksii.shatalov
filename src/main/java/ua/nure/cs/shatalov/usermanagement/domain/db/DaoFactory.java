@@ -9,7 +9,13 @@ public class DaoFactory {
 	private static final String USER_DAO = "dao.ua.nure.cs.shatalov.usermanagement.domain.db.UserDao";
 	private final Properties properties;
 	
-	public DaoFactory() {
+	private final static DaoFactory INSTANCE = new DaoFactory();
+	
+	public static DaoFactory getInstance() {
+		return INSTANCE;
+	}
+	
+	private DaoFactory() {
 		properties = new Properties();
 		try {
 			properties.load(getClass().getClassLoader().getResourceAsStream("settings.properties"));
@@ -31,8 +37,8 @@ public class DaoFactory {
 		UserDao result = null;
 		try {
 			Class clazz = Class.forName(properties.getProperty(USER_DAO));
-			UserDao userDao = (UserDao) clazz.newInstance();
-			userDao.setConnectionFactory(getConnectionFactory());
+			result = (UserDao) clazz.newInstance();
+			result.setConnectionFactory(getConnectionFactory());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);

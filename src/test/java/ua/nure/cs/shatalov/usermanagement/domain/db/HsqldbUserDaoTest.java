@@ -14,6 +14,14 @@ import ua.nure.cs.shatalov.usermanagement.domain.User;
 
 public class HsqldbUserDaoTest extends DatabaseTestCase {
 
+	private static final String SURNAME = "Doe";
+	private static final String NAME = "John";
+	private static final long ID = 1L;
+	private static final String USER = "sa";
+    private static final String PASSWORD = "";
+    private static final String URL = "jdbc:hsqldb:file:db/usermanagement";
+    private static final String DRIVER = "org.hsqldb.jdbcDriver";
+	
 	private HsqldbUserDao dao;
 	private ConnectionFactory connectionFactory;
 	
@@ -23,14 +31,15 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 		super.setUp();
 		// connectionFactory = new ConnectionFactoryImpl();
 		dao = new HsqldbUserDao(connectionFactory);
+
 	}
 
 	public void testCreate() {
 		// fail("Not yet implemented");
 		try {
 			User user = new User();
-			user.setFirstName("John");
-			user.setLastName("Doe");
+			user.setFirstName(NAME);
+			user.setLastName(SURNAME);
 			user.setDateOfBirth(new Date());
 			assertNull(user.getId());
 			user = dao.create(user);
@@ -54,11 +63,20 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 			fail(e.toString());
 		}
 	}
+	
+	public void testFind() throws DatabaseException {
+        long testUserId = ID + 2;
+        User expectedUser = dao.create(createUserWithID(testUserId));
+        User actualUser = dao.find(testUserId);
+        assertNotNull(actualUser);
+        assertEquals(expectedUser.getFirstName(), actualUser.getFirstName());
+        assertEquals(expectedUser.getLastName(), actualUser.getLastName());
+    }
 
 	@Override
 	protected IDatabaseConnection getConnection() throws Exception {
 		// TODO Auto-generated method stub
-		connectionFactory = new ConnectionFactoryImpl();
+		connectionFactory = new ConnectionFactoryImpl(DRIVER, URL, USER, PASSWORD);
 		return new DatabaseConnection(connectionFactory.createConnection());
 	}
 
@@ -69,4 +87,8 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 		return dataSet;
 	}
 
+	private static User createUserWithID(long id) {
+		User user = new User(id, NAME, SURNAME, new Date());
+        return user;
+    }
 }

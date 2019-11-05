@@ -12,13 +12,15 @@ import java.util.LinkedList;
 
 import ua.nure.cs.shatalov.usermanagement.domain.User;
 
-public class HsqldbUserDao implements UserDao {
+class HsqldbUserDao implements UserDao {
 
 	private static final String SELECT_ALL_QUERY = "SELECT id, firstname, lastname, dateofbirth FROM users";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
+	private static final String FIND_QUERY = "SELECT * FROM users WHERE id = ?";
 	private ConnectionFactory connectionFactory;
 	
-	public HsqldbUserDao() {
+	public HsqldbUserDao(ConnectionFactory connectionFactory2) {
+		this.connectionFactory=connectionFactory;
 	}
 	
 	
@@ -66,6 +68,7 @@ public class HsqldbUserDao implements UserDao {
 	@Override
 	public void update(User user) throws DatabaseException {
 		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -78,7 +81,26 @@ public class HsqldbUserDao implements UserDao {
 	@Override
 	public User find(Long id) throws DatabaseException {
 		// TODO Auto-generated method stub
-		return null;
+		Connection connection = connectionFactory.createConnection();
+		User user = new User();
+		try {
+			PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				user = new User();
+				user.setId(resultSet.getLong(1));
+				user.setFirstName(resultSet.getString(2));
+				user.setLastName(resultSet.getString(3));
+				user.setDateOfBirth(resultSet.getDate(4));
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			throw new DatabaseException(e);
+		}
+		return user;
 	}
 
 	@Override
