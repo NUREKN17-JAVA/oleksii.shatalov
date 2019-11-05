@@ -17,6 +17,7 @@ class HsqldbUserDao implements UserDao {
 	private static final String SELECT_ALL_QUERY = "SELECT id, firstname, lastname, dateofbirth FROM users";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
 	private static final String FIND_QUERY = "SELECT * FROM users WHERE id = ?";
+	private static final String UPDATE_QUERY = "UPDATE USERS SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
 	private ConnectionFactory connectionFactory;
 	
 	public HsqldbUserDao(ConnectionFactory connectionFactory2) {
@@ -68,7 +69,27 @@ class HsqldbUserDao implements UserDao {
 	@Override
 	public void update(User user) throws DatabaseException {
 		// TODO Auto-generated method stub
-		
+		try {
+            Connection connection = connectionFactory.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setDate(3, new Date(user.getDateOfBirth().getTime()));
+            preparedStatement.setLong(4, user.getId());
+
+            int insertedRows = preparedStatement.executeUpdate();
+
+            if (insertedRows != 1) {
+                throw new DatabaseException("Number of inserted rows: " + insertedRows);
+            }
+
+            connection.close();
+            preparedStatement.close();
+        } catch (DatabaseException e) {
+            throw new DatabaseException(e.toString());
+        }catch (SQLException e) {
+            throw new DatabaseException(e.toString());
+        }
 
 	}
 

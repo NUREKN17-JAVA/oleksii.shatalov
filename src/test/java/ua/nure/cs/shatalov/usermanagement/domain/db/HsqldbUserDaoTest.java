@@ -14,6 +14,7 @@ import ua.nure.cs.shatalov.usermanagement.domain.User;
 
 public class HsqldbUserDaoTest extends DatabaseTestCase {
 
+	private static final String UPDATED_NAME = "Michael";
 	private static final String SURNAME = "Doe";
 	private static final String NAME = "John";
 	private static final long ID = 1L;
@@ -71,6 +72,19 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNotNull(actualUser);
         assertEquals(expectedUser.getFirstName(), actualUser.getFirstName());
         assertEquals(expectedUser.getLastName(), actualUser.getLastName());
+    }
+	
+	public void testUpdate() throws DatabaseException {
+        User testUser = new User(ID, NAME, SURNAME, new Date());
+        dao.create(testUser);
+
+        testUser.setFirstName(UPDATED_NAME);
+
+        dao.update(testUser);
+        User updatedUser = dao.find(testUser.getId());
+        assertNotNull(updatedUser);
+        assertEquals(testUser.getFirstName(), updatedUser.getFirstName());
+        assertEquals(testUser.getLastName(), updatedUser.getLastName());
     }
 
 	@Override
