@@ -54,4 +54,21 @@ public class MainFrame extends JFrame {
 
 	}
 
+	public void showAddPanel() {
+		// TODO Auto-generated method stub
+		showPanel(getAddPanel());
+	}
+
+	private void showPanel(JPanel panel) {
+		// TODO Auto-generated method stub
+		getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setVisible(true);
+		panel.repaint();
+	}
+
+	private AddPanel getAddPanel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
