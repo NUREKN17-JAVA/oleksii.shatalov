@@ -1,0 +1,25 @@
+package ua.nure.cs.shatalov.usermanagement.domain.gui;
+
+import java.awt.Window;
+
+import junit.extensions.jfcunit.JFCTestCase;
+import junit.extensions.jfcunit.JFCTestHelper;
+
+public class MainFrameTest extends JFCTestCase {
+
+	private Window mainFrame;
+
+	protected void setUp() throws Exception {
+		super.setUp();
+		setHelper(new JFCTestHelper());
+		mainFrame = new MainFrame();
+		mainFrame.setVisible(true);
+	}
+
+	protected void tearDown() throws Exception {
+		mainFrame.setVisible(false);
+		getHelper().cleanUp(this);
+		super.tearDown();
+	}
+
+}
