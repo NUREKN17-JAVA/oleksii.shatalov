@@ -9,6 +9,10 @@ import javax.swing.JPanel;
 
 import org.omg.CORBA.INITIALIZE;
 
+import ua.nure.cs.shatalov.usermanagement.domain.db.DaoFactory;
+import ua.nure.cs.shatalov.usermanagement.domain.db.DaoFactoryImpl;
+import ua.nure.cs.shatalov.usermanagement.domain.db.UserDao;
+
 public class MainFrame extends JFrame {
 
 	private static final int FRAME_HEIGHT = 600;
@@ -16,9 +20,15 @@ public class MainFrame extends JFrame {
 	private JPanel contentPanel;
 	private JPanel browsePanel;
 	private AddPanel addPanel;
+	private UserDao dao;
+
+	public UserDao getDao() {
+		return dao;
+	}
 
 	public MainFrame() {
 		super();
+		dao = DaoFactory.getInstance().getUserDao();
 		initialize();
 	}
 	
@@ -45,6 +55,7 @@ public class MainFrame extends JFrame {
 		if (browsePanel == null) {
 			browsePanel = new BrowsePanel(this);
 		}
+		((BrowsePanel) browsePanel).initTable();
 		return browsePanel;
 	}
 
