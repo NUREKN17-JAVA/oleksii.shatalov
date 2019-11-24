@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -53,6 +54,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			detailsButton = new JButton();
 			detailsButton.setText("Details");
 			detailsButton.setName("detailsButton");
+			addButton.setActionCommand("details");
 			detailsButton.addActionListener(this);
 		}
 		return detailsButton;
@@ -64,6 +66,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			deleteButton = new JButton();
 			deleteButton.setText("Delete");
 			deleteButton.setName("deleteButton");
+			addButton.setActionCommand("delete");
 			deleteButton.addActionListener(this);
 		}
 		return deleteButton;
@@ -75,6 +78,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			editButton = new JButton();
 			editButton.setText("Edit");
 			editButton.setName("editButton");
+			addButton.setActionCommand("edit");
 			editButton.addActionListener(this);
 		}
 		return editButton;
@@ -86,6 +90,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			addButton = new JButton();
 			addButton.setText("Add");
 			addButton.setName("addButton");
+			addButton.setActionCommand("add");
 			addButton.addActionListener(this);
 		}
 		return addButton;
@@ -104,6 +109,8 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		if (userTable == null) {
 			userTable = new JTable();
 			userTable.setName("userTable");
+			UserTableModel model = new UserTableModel(new ArrayList());
+			userTable.setModel(model);
 		}
 		return userTable;
 	}
