@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import org.omg.CORBA.INITIALIZE;
 
+import ua.nure.cs.shatalov.usermanagement.domain.User;
 import ua.nure.cs.shatalov.usermanagement.domain.db.DaoFactory;
 import ua.nure.cs.shatalov.usermanagement.domain.db.DaoFactoryImpl;
 import ua.nure.cs.shatalov.usermanagement.domain.db.UserDao;
@@ -21,6 +22,10 @@ public class MainFrame extends JFrame {
 	private JPanel browsePanel;
 	private AddPanel addPanel;
 	private UserDao dao;
+	private EditPanel editPanel;
+	private DetailsPanel detailsPanel;
+	private UserTableModel utm;
+	private DeletePanel deletePanel;
 
 	public UserDao getDao() {
 		return dao;
@@ -30,6 +35,7 @@ public class MainFrame extends JFrame {
 		super();
 		dao = DaoFactory.getInstance().getUserDao();
 		initialize();
+		utm = new UserTableModel();
 	}
 	
 	private void initialize() {
@@ -90,5 +96,43 @@ public class MainFrame extends JFrame {
 		}
 		return addPanel;
 	}
+	
+	private EditPanel getEditPanel(User user) {
+		// TODO Auto-generated method stub
+		if (editPanel == null) {
+			editPanel = new EditPanel(this, user);
+		}
+		return editPanel;
+	}
+	
+	private DetailsPanel getDetailsPanel(User user) {
+		// TODO Auto-generated method stub
+		if (detailsPanel == null) {
+			detailsPanel = new DetailsPanel(this, user);
+		}
+		return detailsPanel;
+	}
+	
+	private DeletePanel getDeletePanel(User user) {
+		// TODO Auto-generated method stub
+		if (deletePanel == null) {
+			deletePanel = new DeletePanel(this, user);
+		}
+		return deletePanel;
+	}
 
+	public void showEditPanel(int selectedRow) {
+		// TODO Auto-generated method stub
+		showPanel(getEditPanel(utm.getValueAt(selectedRow)));
+	}
+	
+	public void showDetailsPanel(int selectedRow) {
+		// TODO Auto-generated method stub
+		showPanel(getDetailsPanel(utm.getValueAt(selectedRow)));
+	}
+
+	public void showDeletePanel(int selectedRow) {
+		// TODO Auto-generated method stub
+		showPanel(getDeletePanel(utm.getValueAt(selectedRow)));
+	}
 }

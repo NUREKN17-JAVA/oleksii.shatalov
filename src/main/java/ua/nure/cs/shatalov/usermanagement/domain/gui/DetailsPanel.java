@@ -21,7 +21,7 @@ import ua.nure.cs.shatalov.usermanagement.domain.db.DaoFactory;
 import ua.nure.cs.shatalov.usermanagement.domain.db.DatabaseException;
 import ua.nure.cs.shatalov.usermanagement.domain.db.UserDao;
 
-public class EditPanel extends JPanel implements ActionListener {
+public class DetailsPanel extends JPanel implements ActionListener {
 	private MainFrame parent;
 	private JPanel buttonPanel;
 	private JPanel fieldPanel;
@@ -34,14 +34,14 @@ public class EditPanel extends JPanel implements ActionListener {
 	private User user;
 	private UserDao userDao;
 	
-	public EditPanel(MainFrame parent, User usr) {
+	public DetailsPanel(MainFrame parent, User usr) {
 		this.parent = parent;
 		initialize(usr);
 	}
 	
 	private void initialize(User usr) {
 		// TODO Auto-generated method stub
-		this.setName("editPanel");
+		this.setName("detailsPanel");
 		this.setLayout(new BorderLayout());
 		this.add(getFieldPanel(), BorderLayout.NORTH);
 		this.add(getButtonPanel(), BorderLayout.SOUTH);
@@ -49,6 +49,7 @@ public class EditPanel extends JPanel implements ActionListener {
 		this.user = usr;
 		setFields();
 	}
+	
 	private JPanel getButtonPanel() {
 		// TODO Auto-generated method stub
 		if (buttonPanel == null) {
@@ -133,24 +134,6 @@ public class EditPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if ("ok".equalsIgnoreCase(e.getActionCommand())) {
-			user.setFirstName(getFirstNameField().getText());
-			user.setLastName(getLastNameField().getText());
-			DateFormat format = DateFormat.getDateInstance();
-			try {
-				user.setDateOfBirth(format.parse(getDateOfBirthField().getText()));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				getDateOfBirthField().setBackground(Color.RED);
-				return;
-			}
-			try {
-				parent.getDao().update(user);
-			} catch (DatabaseException e1) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
-		}
 		this.setVisible(false);
 		parent.showBrowsePanel();
 	}

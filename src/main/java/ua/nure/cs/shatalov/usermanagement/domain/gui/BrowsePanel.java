@@ -137,6 +137,18 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			this.setVisible(false);
 			parent.showAddPanel();
 		}
+		else if ("edit".equalsIgnoreCase(actionCommand)) {
+			this.setVisible(false);
+			parent.showEditPanel(userTable.getSelectedRow());
+		}
+		else if ("details".equalsIgnoreCase(actionCommand)) {
+			this.setVisible(false);
+			parent.showDetailsPanel(userTable.getSelectedRow());
+		}
+		else if ("delete".equalsIgnoreCase(actionCommand)) {
+			this.setVisible(false);
+			parent.showDeletePanel(userTable.getSelectedRow());
+		}
 	}
 
 }

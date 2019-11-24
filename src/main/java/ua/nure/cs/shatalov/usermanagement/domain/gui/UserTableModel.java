@@ -14,6 +14,11 @@ public class UserTableModel extends AbstractTableModel {
 	private static final Class[] COLUMN_CLASSES = {Long.class, String.class, String.class};
 	private List users = null;
 	
+	public UserTableModel() {
+		// TODO Auto-generated constructor stub
+		this.users = null;
+	}
+	
 	public UserTableModel(Collection users) {
 		// TODO Auto-generated constructor stub
 		this.users = new ArrayList(users);
