@@ -59,6 +59,11 @@ public class MainFrame extends JFrame {
 		// TODO Auto-generated method stub
 		showPanel(getAddPanel());
 	}
+	
+	public void showBrowsePanel() {
+		// TODO Auto-generated method stub
+		showPanel(getBrowsePanel());
+	}
 
 	private void showPanel(JPanel panel) {
 		// TODO Auto-generated method stub
