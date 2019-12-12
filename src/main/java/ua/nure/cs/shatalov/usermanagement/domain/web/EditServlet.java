@@ -33,12 +33,12 @@ public class EditServlet extends HttpServlet {
 		req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	}
 
-	private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.getRequestDispatcher("/browse.jsp").forward(req, resp);
 	}
 
-	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+	protected void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
 		// TODO Auto-generated method stub
 		User user = null;
 		try {
@@ -59,7 +59,7 @@ public class EditServlet extends HttpServlet {
 		req.getRequestDispatcher("/browse").forward(req, resp);
 	}
 
-	private User getUser(HttpServletRequest req) throws ValidationException, java.text.ParseException {
+	protected User getUser(HttpServletRequest req) throws ValidationException, java.text.ParseException {
 		// TODO Auto-generated method stub
 		User user = new User();
 		String idStr = req.getParameter("id");
