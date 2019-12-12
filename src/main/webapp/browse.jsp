@@ -24,5 +24,10 @@
     <input type="submit" name="deleteButton" value="Delete">
     <input type="submit" name="detailsButton" value="Details">
     </form>
+    <c:if test='${request.Scope.error != null}'>
+	<script type="text/javascript">
+		alert('${request.Scope.error}');
+	</script>
+	</c:if>
 </body>
 </html>
