@@ -28,7 +28,7 @@ public class EditServlet extends HttpServlet {
 		}
 	}
 
-	private void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	}
@@ -92,7 +92,7 @@ public class EditServlet extends HttpServlet {
 		return user;
 	}
 
-	private void processUser(User user) throws DatabaseException {
+	protected void processUser(User user) throws DatabaseException {
 		// TODO Auto-generated method stub
 		DaoFactory.getInstance().getUserDao().update(user);
 	}
