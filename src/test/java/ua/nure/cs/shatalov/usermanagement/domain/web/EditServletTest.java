@@ -24,4 +24,49 @@ public class EditServletTest extends MockServletTestCase {
 		addRequestParameter("okButton", "Ok");
 		doPost();
 	}
+	
+	public void testEditEmptyFirstName() {
+		Date date = new Date();
+		addRequestParameter("id", "1000");
+		addRequestParameter("lastName", "Doe");
+		addRequestParameter("date", DateFormat.getInstance().format(date));
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull("Could not find error message in session scope", errorMessage);
+	}
+	
+	public void testEditEmptyLastName() {
+		Date date = new Date();
+		addRequestParameter("id", "1000");
+		addRequestParameter("firstName", "John");
+		addRequestParameter("date", DateFormat.getInstance().format(date));
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull("Could not find error message in session scope", errorMessage);
+	}
+	
+	public void testEditEmptyDate() {
+		Date date = new Date();
+		addRequestParameter("id", "1000");
+		addRequestParameter("firstName", "John");
+		addRequestParameter("lastName", "Doe");
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull("Could not find error message in session scope", errorMessage);
+	}
+	
+	public void testEditEmptyDateIncorrect() {
+		Date date = new Date();
+		addRequestParameter("id", "1000");
+		addRequestParameter("firstName", "John");
+		addRequestParameter("lastName", "Doe");
+		addRequestParameter("date", "lkjghdsfkhdfkjghfdl");
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String)getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull("Could not find error message in session scope", errorMessage);
+	}
 }
